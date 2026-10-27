@@ -1,0 +1,73 @@
+
+/* Border Control v1.2: theme UI & fictional live moving mark / arrows */
+:root{--bc-font:'Arial Narrow','Segoe UI',Arial,sans-serif;--bc-text:#e0e9e6;--bc-rule:#2b4148;--bc-header:#0a171c;--bc-left:#0b181e;--bc-map:#0b1a1e;--bc-right:#0b181e;--bc-chat:#09151b;--bc-tools:#132832;--bc-popup:#13272a;--bc-bright:1;--bc-contrast:1;--bc-sat:1;--bc-hue:0deg;--bc-grit:.05;--bc-grit-size:90px;--bc-wallpaper:url('/border/wallpapers/wall-01.svg');--bc-pattern:none}
+body{font-family:var(--bc-font);color:var(--bc-text)}
+.topbar{background:var(--bc-header);border-color:var(--bc-rule)}
+.left{background:var(--bc-left);border-color:var(--bc-rule)}
+.center{background:var(--bc-map)}
+.right{background:var(--bc-right);border-color:var(--bc-rule)}
+.chat{background:var(--bc-chat);border-color:var(--bc-rule)}
+.tools button{background:var(--bc-tools);border-color:var(--bc-rule)}
+.join-card,.editor-card,.capture-card{background:var(--bc-popup);border-color:var(--bc-rule)}
+.map-board>img{filter:saturate(.6) contrast(1.1) sepia(.15)}
+.layout{position:relative;isolation:isolate;filter:brightness(var(--bc-bright)) contrast(var(--bc-contrast)) saturate(var(--bc-sat)) hue-rotate(var(--bc-hue));background-image:linear-gradient(#06111893,#06111893),var(--bc-wallpaper);background-size:cover;background-position:center}
+.layout::before{content:'';position:absolute;inset:0;background-image:var(--bc-pattern);background-size:32px 32px;pointer-events:none;opacity:.20;z-index:2}
+.layout::after{content:'';position:absolute;inset:0;pointer-events:none;background-image:url('/border/noise.svg');background-size:var(--bc-grit-size);opacity:var(--bc-grit);z-index:2}
+.layout>*{position:relative;z-index:1}
+.identity,.section-head,.message,.message b,.chat-title,.help,.map-header,.topbar,.right,.left,.center,.map-overlay-label{color:var(--bc-text)}
+.theme-opener{background:#193137;color:#d9ede9;border:1px solid var(--bc-rule);font:900 10px Consolas,monospace;padding:10px 12px}
+.live-tools{display:grid;grid-template-columns:1fr 1fr;gap:7px}
+.live-tools button{min-height:42px;border:1px solid var(--bc-rule);background:#253d42;color:#eef6f2;font:900 10px Consolas,monospace;padding:8px 4px}
+.live-tools button.active{background:#5d3740;border-color:#f29d8f}
+.live-tools #borderLiveClear{grid-column:1/-1;min-height:30px;background:#16292f;font-size:9px}
+.live-status{font:10px/1.5 Consolas,monospace;color:#a5c2b6;padding:8px;border-left:2px solid #abbd91;background:#12282a}
+.live-direction-layer{position:absolute;inset:0;z-index:5;pointer-events:none}
+.live-direction-layer svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
+.live-dot{position:absolute;display:flex;flex-direction:column;align-items:center;min-width:18px;transform:translate(-50%,-100%);color:#dbf3f3;text-shadow:0 1px 3px #000;font:700 10px Consolas,monospace;white-space:nowrap;pointer-events:none}
+.live-dot::after{content:'';display:block;border-radius:50%;height:10px;width:10px;background:#65d9f7;border:2px solid white;box-shadow:0 0 8px #56d6ff}
+.live-dot.incoming{color:#ffc0b8}.live-dot.incoming::after{background:#f45458;box-shadow:0 0 8px #ff5555}
+.theme-dialog{width:min(760px,100%);max-height:calc(100dvh - 30px);overflow:auto;border:1px solid #90b6b0;background:#081920;color:#ecf7f2;padding:18px;box-shadow:0 25px 90px #000d}
+.theme-titlebar{display:flex;align-items:center;justify-content:space-between;gap:12px;border-bottom:1px solid #577b7b;padding-bottom:10px}
+.theme-titlebar h2{font:900 16px Consolas,monospace;letter-spacing:.7px;margin:0}
+.theme-titlebar button,.theme-tabs button,.theme-neutral,.theme-save-row button,.saved-theme-list button{background:#223940;color:#e6f4eb;border:1px solid #5f8380;font:900 10px Consolas,monospace;padding:10px;cursor:pointer}
+.theme-note{color:#acc9c0;font:11px/1.6 Consolas,monospace}
+.theme-tabs{display:grid;grid-template-columns:repeat(3,1fr);gap:7px;margin:12px 0}
+.theme-tabs button.active{background:#41615b;border-color:#b0dfc9}
+.theme-panel{padding:8px 0 12px;min-height:170px}
+.theme-sliders{display:grid;gap:10px}
+.theme-sliders label{display:grid;grid-template-columns:110px 1fr 38px;gap:10px;align-items:center;font:900 10px Consolas,monospace}
+.theme-sliders input{width:100%;min-width:0;accent-color:#8cbbb1}.theme-sliders output{text-align:right;color:#cde9db}
+.theme-neutral{margin-top:14px}
+.theme-editor-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.theme-editor-grid label{display:grid;gap:5px;font:10px Consolas,monospace}
+.theme-editor-grid select,.theme-editor-grid input{background:#122931;color:#f2fbf7;border:1px solid #597c79;padding:8px;min-width:0;width:100%;min-height:36px}
+.theme-editor-grid input[type=color]{padding:3px;height:36px}
+.theme-preview{margin-top:12px;padding:15px;border:1px solid #567d7a;background:#142d33;font:11px Consolas,monospace}
+.wallpaper-gallery{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px;max-height:330px;overflow:auto}
+.wallpaper-option{position:relative;aspect-ratio:16/10;background-size:cover;background-position:center;border:1px solid #486d68;color:#fff;cursor:pointer;padding:0;text-shadow:0 1px 3px #000}
+.wallpaper-option.selected{outline:2px solid #d9ead3;border-color:#d9ead3}
+.wallpaper-option span{position:absolute;bottom:3px;left:4px;background:#061519ca;padding:2px 5px;font:900 9px Consolas,monospace}
+.theme-save-row{display:grid;grid-template-columns:minmax(130px,1fr) auto auto;gap:8px;margin-top:12px;border-top:1px solid #486a67;padding-top:12px}
+.theme-save-row input{min-width:0;background:#12272f;color:#fff;border:1px solid #638784;padding:10px}
+.saved-theme-list{display:flex;flex-wrap:wrap;gap:7px;margin-top:12px}
+.theme-message{padding-top:9px;font:10px Consolas,monospace;color:#b4d8c5}
+@media(max-width:700px){.theme-opener{padding:8px 5px;font-size:9px}.live-tools{grid-template-columns:1fr 1fr}.live-tools button{font-size:9px}.wallpaper-gallery{grid-template-columns:repeat(3,minmax(0,1fr))}.theme-editor-grid{grid-template-columns:1fr 1fr}.theme-save-row{grid-template-columns:1fr 1fr}.theme-save-row input{grid-column:1/-1}}
+@media(max-width:400px){.theme-tabs button{font-size:9px;padding:8px 3px}.theme-editor-grid{grid-template-columns:1fr}.theme-sliders label{grid-template-columns:85px 1fr 35px}}
+
+/* Slightly translucent wallpaper under each editable section; the per-box color remains dominant. */
+.left{background-image:linear-gradient(color-mix(in srgb,var(--bc-left) 85%,transparent),color-mix(in srgb,var(--bc-left) 89%,transparent)),var(--bc-wallpaper);background-size:cover}
+.center{background-image:linear-gradient(color-mix(in srgb,var(--bc-map) 86%,transparent),color-mix(in srgb,var(--bc-map) 92%,transparent)),var(--bc-wallpaper);background-size:cover}
+.right{background-image:linear-gradient(color-mix(in srgb,var(--bc-right) 85%,transparent),color-mix(in srgb,var(--bc-right) 90%,transparent)),var(--bc-wallpaper);background-size:cover}
+.chat{background-image:linear-gradient(color-mix(in srgb,var(--bc-chat) 77%,transparent),color-mix(in srgb,var(--bc-chat) 88%,transparent)),var(--bc-wallpaper);background-size:cover;background-position:center}
+/* Font picker applies even to labels that previously hard-coded monospace styles. */
+.layout,.layout button,.layout select,.layout input,.layout textarea,.layout label,.layout b,.layout small,.layout span,.layout p,.layout time,.layout .section-head,.layout .activity,.layout .message,.layout .map-feedback,.layout .map-footer,.layout .map-overlay-label{font-family:var(--bc-font)!important}
+
+/* v1.3: zoomed map drag and pinch controls, aligned overlays */
+.map-viewport{touch-action:none;overscroll-behavior:contain}
+.map-viewport.can-pan{cursor:grab}
+.map-viewport.can-pan:active{cursor:grabbing}
+.map-viewport.pan-mode{outline:1px solid #92c5bc;outline-offset:-1px}
+.zoom-buttons{flex-wrap:wrap;justify-content:flex-end}
+.zoom-buttons #panToggle{font:900 10px Consolas,monospace;padding:0 10px;min-width:70px}
+.zoom-buttons #panToggle.selected{border-color:#e1eabf;background:#416258;color:white}
+@media(max-width:480px){.zoom-buttons{max-width:64%;gap:3px}.zoom-buttons #panToggle{min-width:56px;padding:0 5px;font-size:9px}.map-header h1{font-size:14px}}

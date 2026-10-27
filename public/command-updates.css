@@ -1,0 +1,84 @@
+
+/* v1.4 / five visual layouts and map/camera simulation views */
+.layout-side-button{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:48px;padding:10px 12px;background:#1d3338;border:1px solid #7b9990;color:#d6ebe5;font:900 11px Consolas,monospace;letter-spacing:.6px;text-align:left}
+.layout-side-button b{color:#f5be87;font-size:9px}
+.zoom-buttons #openLayoutsMap{background:#294341;border-color:#6f9b94;font-size:10px}
+.vision-controls{display:flex;align-items:center;flex-wrap:wrap;gap:6px;padding:8px 12px;border-top:1px solid var(--bc-rule,#35535c);background:#101e22;color:#b7d3ca;font:900 10px Consolas,monospace}
+.vision-controls button,.camera-filter-bar button{padding:8px 10px;border:1px solid #44636a;color:#cce7df;background:#152930;font:900 10px Consolas,monospace;min-height:33px}
+.vision-controls button.active,.camera-filter-bar button.active{border-color:#b4dfd2;background:#31554c;color:white}
+.vision-controls small{font:9px Consolas,monospace;opacity:.66;margin-left:auto}
+#mapBoard>img{filter:saturate(.82) contrast(1.07)}
+#mapViewport[data-vision="night"] #mapBoard>img{filter:grayscale(1) sepia(1) hue-rotate(65deg) saturate(5) contrast(1.5) brightness(.84)}
+#mapViewport[data-vision="night"] .map-grid{box-shadow:inset 0 0 65px #001200d9;background:linear-gradient(90deg,#35e85829 1px,transparent 1px),linear-gradient(#35e85829 1px,transparent 1px);background-size:9.5% 9.5%}
+#mapViewport[data-vision="heat"] #mapBoard>img{filter:grayscale(1) invert(.55) sepia(1) saturate(6) hue-rotate(310deg) contrast(1.65) brightness(.85)}
+#mapViewport[data-vision="heat"] .map-grid{background:linear-gradient(90deg,#ffc64d28 1px,transparent 1px),linear-gradient(#ffc64d28 1px,transparent 1px);background-size:9.5% 9.5%}
+.camera-filter-bar{display:flex;flex-wrap:wrap;align-items:center;gap:6px;padding:8px 0;color:#b1d5c7;font:900 10px Consolas,monospace}
+.camera-stage[data-vision="night"] #cameraPreview{filter:grayscale(1) sepia(1) hue-rotate(65deg) saturate(5) contrast(1.6) brightness(.82)}
+.camera-stage[data-vision="heat"] #cameraPreview{filter:grayscale(1) invert(.55) sepia(1) saturate(6) hue-rotate(315deg) contrast(1.6) brightness(.9)}
+.camera-stage[data-vision="night"] .camera-corners{border-color:#60ff88;box-shadow:inset 0 0 20px #00ff5515}
+.camera-stage[data-vision="heat"] .camera-corners{border-color:#ff9e62;box-shadow:inset 0 0 20px #ff69351b}
+.small-pin{display:none!important}
+.map-viewport.show-small-marks .small-pin{display:flex!important;width:14px;height:14px;min-width:14px;font-size:6px;padding:1px;background:#21444b;border:1px solid #c3d7d0;border-radius:0}
+/* Compact map icons: full incident descriptions appear only when opened. */
+.pin.major-pin{width:26px;height:26px;max-width:none;min-width:26px;min-height:26px;display:flex;align-items:center;justify-content:center;padding:0;color:#fff;background:#3e1e25ee;border:1px solid #f08c81;transform:translate(-50%,-50%);font:900 9px/1 Consolas,monospace;z-index:4;box-shadow:0 0 0 2px #300e1f88,0 3px 9px #0008}
+.pin.major-pin .pin-glyph{font:900 9px/1 Consolas,monospace;color:#ffc4be;display:block;text-align:center}
+.pin.dispatch-pin{width:29px;height:29px;min-width:29px;min-height:29px;background:#611923f5;border:2px solid #ffc196;animation:borderDispatchPulse 1.05s infinite;z-index:6}
+.zone>span{display:none!important}
+@keyframes borderDispatchPulse{0%,100%{box-shadow:0 0 0 2px #ff7d6855,0 0 8px #f34a59}50%{box-shadow:0 0 0 8px #ff7d680d,0 0 24px #ff5459;filter:brightness(1.3)}}
+.dispatch-alert{position:absolute;top:12px;right:12px;z-index:20;width:min(360px,calc(100% - 24px));max-height:60%;overflow:auto;border:2px solid #ff9b7b;background:#2e1119f5;padding:12px;color:white;box-shadow:0 0 32px #d32b4444;animation:dispatchBlink 1.5s 4}
+.dispatch-alert .dispatch-title{font:900 12px Consolas,monospace;color:#ffb6a0;letter-spacing:1px}
+.dispatch-alert #dispatchMessage{font:11px/1.5 Consolas,monospace;padding:9px 0;white-space:pre-wrap}
+.dispatch-alert button{padding:9px 13px;background:#71323a;border:1px solid #ffaf8c;color:white;font:900 10px Consolas,monospace}
+@keyframes dispatchBlink{50%{border-color:#fff6cf;box-shadow:0 0 42px #ff61318e}}
+#markPriority{display:block;width:100%;padding:11px;background:#13252d;border:1px solid #638178;color:#eafaf4;min-height:41px}
+.layout-dialog{width:min(690px,100%);max-height:90dvh;overflow:auto;padding:20px;background:#101c22;border:1px solid #769d99;color:#edf7f4;box-shadow:0 25px 90px #000b}
+.layout-dialog-head{display:flex;justify-content:space-between;gap:14px;align-items:start;border-bottom:1px solid #43615d;padding-bottom:10px}
+.layout-dialog h2{margin:5px 0 0;font-size:18px;letter-spacing:.8px}.layout-dialog-head small{color:#8bb6ae;font:10px Consolas,monospace}
+.layout-dialog-head button{padding:9px 14px;background:#243e45;border:1px solid #67908b;color:white;font:900 10px Consolas,monospace}
+.layout-dialog p{color:#a2bfba;font:11px/1.5 Consolas,monospace}
+.layout-presets{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:9px}
+.layout-presets button{display:grid;text-align:left;grid-template-columns:65px 1fr;column-gap:11px;row-gap:6px;align-items:center;padding:9px;background:#172932;border:1px solid #405e65;color:#e8f4ee}
+.layout-presets button.selected{outline:2px solid #bce4da;border-color:#bce4da}
+.layout-presets button strong{font:900 13px Consolas,monospace;letter-spacing:.7px}
+.layout-presets button small{grid-column:2;font:10px Consolas,monospace;color:#aec8c4}
+.swatch{grid-row:span 2;height:56px;background:#000;border:1px solid #9995}
+.swatch.dark-bravo{background:linear-gradient(135deg,#0a1013 0 40%,#263439 40% 80%,#c0434d 80%)}
+.swatch.cool-night{background:linear-gradient(135deg,#04121e 0 40%,#194461 40% 80%,#4ecceb 80%)}
+.swatch.sunny-day{background:linear-gradient(135deg,#fff0c7 0 40%,#ddbc84 40% 80%,#8b6741 80%)}
+.swatch.cool-morning{background:linear-gradient(135deg,#cfdee5 0 40%,#8faeb8 40% 80%,#4b817c 80%)}
+.swatch.midnight-orange{background:linear-gradient(135deg,#080b10 0 40%,#3e261b 40% 80%,#f78329 80%)}
+/* Stronger profile-specific backgrounds, spacing and geometry; theme colors are applied via JS so they can also be saved. */
+body[data-command-layout="dark-bravo"] .layout{grid-template-columns:255px minmax(300px,1fr) 310px}
+body[data-command-layout="dark-bravo"] .topbar{border-bottom:2px solid #b74a51}
+body[data-command-layout="dark-bravo"] .section-head{letter-spacing:1.8px}
+body[data-command-layout="cool-night"] .layout{grid-template-columns:205px minmax(340px,1.5fr) 260px}
+body[data-command-layout="cool-night"] .map-viewport{height:65dvh}
+body[data-command-layout="cool-night"] .topbar{box-shadow:inset 0 -3px 0 #2f7b9d}
+body[data-command-layout="sunny-day"] .layout{grid-template-columns:1fr 1fr;grid-template-areas:'map map' 'ops comms'}
+body[data-command-layout="sunny-day"] .center{grid-area:map}body[data-command-layout="sunny-day"] .left{grid-area:ops;border-top:2px solid #ba8e50}body[data-command-layout="sunny-day"] .right{grid-area:comms;border-top:2px solid #ba8e50}
+body[data-command-layout="sunny-day"] .map-viewport{height:62dvh}
+body[data-command-layout="sunny-day"] .topbar{background-image:linear-gradient(90deg,#e6d3a7,#fbf0d5)}
+body[data-command-layout="cool-morning"] .layout{grid-template-columns:235px minmax(360px,1fr) 250px;grid-template-areas:'comms map ops'}
+body[data-command-layout="cool-morning"] .center{grid-area:map}body[data-command-layout="cool-morning"] .left{grid-area:ops;border-left:1px solid var(--bc-rule)}body[data-command-layout="cool-morning"] .right{grid-area:comms;border-right:1px solid var(--bc-rule)}
+body[data-command-layout="cool-morning"] .section-head{border-bottom:2px solid #9bbcc2}
+body[data-command-layout="cool-morning"] .map-viewport{height:61dvh}
+body[data-command-layout="midnight-orange"] .layout{grid-template-columns:1fr 1fr;grid-template-areas:'map map' 'ops comms'}
+body[data-command-layout="midnight-orange"] .center{grid-area:map}body[data-command-layout="midnight-orange"] .left{grid-area:ops}body[data-command-layout="midnight-orange"] .right{grid-area:comms}
+body[data-command-layout="midnight-orange"] .map-viewport{height:66dvh}
+body[data-command-layout="midnight-orange"] .topbar{border-bottom:3px solid #df752f}
+body[data-command-layout="midnight-orange"] .section-head{color:#ffb568;letter-spacing:1.4px}
+/* Lightweight map fullscreen fallback on iOS devices with limited Fullscreen API support. */
+body.map-maximized .center,.center:fullscreen{position:fixed!important;inset:0!important;z-index:1000;background:#09171d;display:flex!important;flex-direction:column!important;overflow:auto!important;width:100vw!important;height:100dvh!important;margin:0!important;border:0!important}
+body.map-maximized .map-viewport,.center:fullscreen .map-viewport{height:auto!important;min-height:240px!important;flex:1!important}
+body.map-maximized .map-bottom,.center:fullscreen .map-bottom{max-height:95px;overflow:auto}
+body.map-maximized .zoom-buttons #mapFullscreen,.center:fullscreen .zoom-buttons #mapFullscreen{background:#6e3333;border-color:#ffa095}
+@media(max-width:1100px){body[data-command-layout] .layout{grid-template-columns:200px minmax(300px,1fr);grid-template-areas:'ops map' 'comms comms'}body[data-command-layout] .left{grid-area:ops}body[data-command-layout] .center{grid-area:map}body[data-command-layout] .right{grid-area:comms;min-height:280px}body[data-command-layout] .map-viewport{height:58dvh}}
+@media(max-width:700px){body[data-command-layout] .layout{display:flex!important;flex-direction:column!important}body[data-command-layout] .center{order:1!important}body[data-command-layout] .left{order:2!important}body[data-command-layout] .right{order:3!important}body[data-command-layout] .map-viewport{height:49dvh;min-height:300px}body.map-maximized .center{order:initial!important} .layout-presets{grid-template-columns:1fr}.vision-controls small{flex-basis:100%;margin-left:0}.zoom-buttons #openLayoutsMap{min-width:54px}}
+@media(prefers-reduced-motion:reduce){.dispatch-alert,.pin.dispatch-pin{animation:none}}
+@keyframes dispatchMapFlash{0%{box-shadow:inset 0 0 0 4px #fa6e59}50%{box-shadow:inset 0 0 45px 18px #ff7d6266}100%{box-shadow:inset 0 0 0 0 #ff634000}}
+.map-viewport.dispatch-flash{animation:dispatchMapFlash 1s ease-out 4}
+body[data-command-layout="sunny-day"] .tools button,body[data-command-layout="cool-morning"] .tools button,body[data-command-layout="sunny-day"] .layout-side-button,body[data-command-layout="cool-morning"] .layout-side-button{color:#263a40;border-color:#9a9282}
+body[data-command-layout="sunny-day"] .vision-controls,body[data-command-layout="cool-morning"] .vision-controls{background:#c4cec6;color:#273841}
+body[data-command-layout="sunny-day"] .map-header,body[data-command-layout="cool-morning"] .map-header{color:#243e46}
+body[data-command-layout="sunny-day"] .section-head,body[data-command-layout="cool-morning"] .section-head{color:#374e54}
+body[data-command-layout="sunny-day"] .map-footer,body[data-command-layout="cool-morning"] .map-footer{color:#2f4a4b;background:#bdccc6}

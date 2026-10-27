@@ -1,0 +1,17 @@
+{
+  "name": "ase-border-control-rp",
+  "version": "1.8.0",
+  "private": true,
+  "description": "Four-person fictional Border Control roleplay map, browser media sharing, and hold-to-talk radio",
+  "scripts": {
+    "start": "node server.js",
+    "check": "node --check server.js && node --check border-room.js && node --check public/app.js && node --check public/media-radio.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "express": "^4.21.2",
+    "socket.io": "^4.8.1"
+  }
+}

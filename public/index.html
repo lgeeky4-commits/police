@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width,initial-scale=1,viewport-fit=cover" name="viewport"/><meta content="#101c20" name="theme-color"/><title>BORDER CONTROL / RP FIELD CONSOLE v1.5</title><link href="/border/style.css" rel="stylesheet"/><link href="/border/theme-live.css" rel="stylesheet"/><link href="/border/creator-dossier.css" rel="stylesheet"/><link href="/border/command-updates.css" rel="stylesheet"/><script defer="" src="/socket.io/socket.io.js"></script><script defer="" src="/border/app.js"></script><script defer="" src="/border/media-radio.js"></script><script defer="" src="/border/live-direction.js"></script><script defer="" src="/border/theme-studio.js"></script><script defer="" src="/border/command-updates.js"></script><link href="/border/layout-workspace.css" rel="stylesheet"/><script defer="True" src="/border/layout-workspace.js"></script><link rel="stylesheet" href="/border/time-lens.css"></head>
+<body><div id="borderShell"><div class="stripes"></div><header class="topbar"><div class="identity"><span class="identity-logo">BC<span>04</span></span><div><b>BORDER CONTROL</b><small>FIELD COORDINATION / ROLEPLAY ONLY</small></div></div><div class="topbar-right"><button aria-pressed="false" class="orientation-toggle" id="manualSideways" type="button">SIDEWAYS VIEW</button><span class="sim-pill">FAKE SIMULATION</span><span class="online-count" id="onlineCount">0 / 4 ONLINE</span><button class="theme-opener" id="openThemes" type="button">THEMES / EDIT</button><a class="roles-link" href="/">ROLES</a></div></header><div class="notice">FICTIONAL TRAINING MAP — NOT FOR REAL BORDER, EMERGENCY, OR ENFORCEMENT OPERATIONS. NO GPS OR PERSON TRACKING.</div><main class="layout" hidden="" id="app">
+<aside class="left"><nav aria-label="Sidebar workspaces" class="command-side-tabs" id="commandSideTabs"><button aria-pressed="true" class="active" data-side-tab="marks" type="button">MARKS</button><button aria-pressed="false" data-side-tab="colors" type="button">COLORS</button><button aria-pressed="false" data-side-tab="units" type="button">UNITS</button><button aria-pressed="false" data-side-tab="layout" type="button">LAYOUTS</button></nav><button class="layout-side-button" id="openLayouts" type="button"><span>INTERFACE STYLES</span><b>5 LAYOUTS</b></button><div aria-label="Quick map colors" class="landscape-color-shortcuts"><span>MAP COLOR</span><button class="active" data-map-vision="color" type="button">COLOR</button><button data-map-vision="night" type="button">NIGHT</button><button data-map-vision="heat" type="button">HEAT</button></div>
+<div class="side-panel" data-side-content="units" id="sidebarUnitPanel"><div class="section-head"><span>01 / FIELD UNITS</span><b id="unitCount">00</b></div><div class="unit-roster" id="unitRoster"></div><label class="mini-label" for="unitStatus">MY STATUS</label><select id="unitStatus"><option>AVAILABLE</option><option>PATROL</option><option>AT POST</option><option>OBSERVING</option></select><div class="label-row"><span>GAME SESSION</span><b>4 PLAYER MAX</b></div></div><div class="side-panel" data-side-content="marks" id="sidebarMarkPanel"><div class="section-head tools-head"><span>02 / FIELD TOOLS</span><small>SELECT THEN TAP MAP</small></div><div class="tools" id="tools"><button class="selected" data-mode="view" type="button">VIEW MAP</button><button data-mode="CHECKPOINT" type="button">CHECKPOINT</button><button data-mode="BLOCK" type="button">ROADBLOCK</button><button data-mode="OBSERVATION" type="button">OBSERVATION</button><button data-mode="PATROL" type="button">PATROL POINT</button><button data-mode="NOTE" type="button">SMALL REPORT</button><button data-mode="INCIDENT" type="button">BIG INCIDENT</button><button data-mode="DISPATCH" type="button">DISPATCH ALERT</button><button data-mode="zone" type="button">BLOCK AREA</button><button id="cancelTool" type="button">CANCEL</button></div><div aria-label="Fictional live map tools" class="live-tools"><button id="borderLiveMove" type="button">LIVE MARK / OFF</button><button id="borderLiveIncoming" type="button">INCOMING ROUTE</button><button id="borderLiveClear" type="button">CLEAR MY LIVE MARKS</button></div><div class="live-status" id="liveStatus">Tap LIVE MARK, then tap different points. The latest dot moves and only two arrows remain.</div><div class="help" id="toolHelp">Choose a field tool and tap the reference map. Only fictional location marks are shared.</div></div><div class="side-panel" data-side-content="colors" id="sidebarColorPanel"><div class="section-head"><span>MAP PALETTE</span><small>LIVE PREVIEW</small></div>
+<div aria-label="Map visual effects" class="sidebar-filter-modes"><button class="active" data-map-vision="color" type="button">COLOR</button><button data-map-vision="night" type="button">NIGHT</button><button data-map-vision="heat" type="button">HEAT</button></div>
+<label class="side-filter-slider">BRIGHTNESS <output id="mapBrightValue">100%</output><input id="mapQuickBrightness" max="150" min="50" step="5" type="range" value="100"/></label>
+<label class="side-filter-slider">HUE <output id="mapHueValue">0°</output><input id="mapQuickHue" max="180" min="-180" step="10" type="range" value="0"/></label>
+<button class="side-reset-colors" id="resetQuickColors" type="button">RESET MAP COLORS</button>
+<button class="side-reset-colors" id="editFullTheme" type="button">EDIT FULL THEME</button>
+<p class="sidebar-note">Color modes are game effects, not thermal imaging.</p></div></aside>
+<section class="center"><div class="map-header"><div><small>03 / FIELD MAP</small><h1>SECTOR <span>OVERVIEW</span></h1></div><div class="zoom-buttons"><button aria-label="Zoom out" id="zoomOut" type="button">−</button><b id="zoomLabel">100%</b><button aria-label="Zoom in" id="zoomIn" type="button">+</button><button id="zoomReset" type="button">RESET</button><button aria-pressed="false" id="panToggle" type="button">PAN MAP</button><button aria-pressed="false" id="mapFullscreen" type="button">FULLSCREEN</button><button id="openLayoutsMap" type="button">LAYOUTS</button></div><span class="orientation-hint">LANDSCAPE / MAP CENTERED</span></div>
+<div aria-label="Map vision effect" class="vision-controls"><span>MAP CAMERA EFFECT</span><button class="active" data-map-vision="color" type="button">COLOR</button><button data-map-vision="night" type="button">NIGHT VISION</button><button data-map-vision="heat" type="button">HEAT</button><small>SIMULATED VISUAL FILTERS</small></div>
+<div aria-label="Zoomable fictional map. Swipe when zoomed in or use Pan Map to move the view." class="map-viewport" data-vision="color" id="mapViewport"><div aria-label="Fictional map for checkpoints and block areas" class="map-board" id="mapBoard" role="application"><img alt="Illustrated fictional area map" draggable="false" src="/border/reference-map.png"/><div class="map-grid"></div><div class="map-lines" id="areaLayer"></div><div class="marker-layer" id="markerLayer"></div><div class="live-direction-layer" id="liveDirectionLayer"></div></div><div class="map-overlay-label"><span>REFERENCE ONLY</span><b>SECTOR 01 / DEMO</b></div><div class="map-feedback" id="mapFeedback">VIEW MODE</div>
+<div aria-live="assertive" class="dispatch-alert" hidden="" id="dispatchToast" role="alert"><div class="dispatch-title">DISPATCH / PRIORITY ALERT</div><div id="dispatchMessage"></div><button id="dispatchDismiss" type="button">ACKNOWLEDGE</button></div></div>
+<div class="map-footer"><span id="mapStatus">TAP A TOOL TO PLACE A MARK</span><span id="coords">X 00.0 / Y 00.0</span></div>
+<div class="map-bottom"><div class="section-head"><span>04 / MAP ITEMS</span><b id="itemCount">0</b></div><div class="mini-filters"><button class="active" data-filter="all">ALL</button><button data-filter="point">MARKS</button><button data-filter="zone">BLOCK AREAS</button></div><div class="item-list" id="itemList"></div></div></section>
+<aside class="right"><div class="section-head"><span>05 / FIELD COMMUNICATIONS</span><small>SHARED ROOM</small></div>
+<div aria-label="Browser camera capture" class="media-toolbar">
+<button id="takePhoto" type="button"><span class="tool-square"></span> TAKE PHOTO</button>
+<button id="recordVideo" type="button"><span class="tool-square record"></span> RECORD VIDEO</button>
+</div>
+<div class="radio-panel">
+<div class="radio-row"><span>WALKIE-TALKIE / LIVE</span><span aria-live="polite" id="radioStatus">IDLE</span></div>
+<button aria-label="Hold to talk on the walkie-talkie" id="radioTalk" type="button">HOLD TO TALK</button>
+<button class="audio-enable" id="enableAudio" type="button">ENABLE SPEAKER</button>
+<button aria-pressed="false" class="audio-enable" id="monitorMic" type="button">HEAR MYSELF / OFF</button>
+<div class="mic-test-tools"><button id="micTestRecord" type="button">TEST MY MIC / 3 SEC</button><button disabled="" id="micTestPlay" type="button">PLAY MY TEST</button></div>
+<div aria-live="polite" class="mic-test-status" id="micTestStatus">Record and play back your voice, or enable HEAR MYSELF with headphones. Other players hear you when you hold TALK.</div>
+<div id="radioHelp">Hold TALK to transmit to everyone in this room. Only one speaker at a time. The transmitting phone does not play its own voice (to avoid feedback).</div>
+</div>
+<div class="chat-title">TEAM CHAT <span>● ONLINE</span></div><div aria-live="polite" class="chat" id="chat" role="log"></div><form id="chatForm"><input autocomplete="off" id="chatInput" maxlength="600" placeholder="Message to field units..."/><button type="submit">SEND</button></form><div class="section-head history-head"><span>06 / MAP LOG</span><small>RECENT</small></div><div class="activity-list" id="activityList"></div><p class="footer-note">This role has intentionally limited powers. No private surveillance, camera access, real vehicle tracking, or weapon controls.</p></aside>
+</main></div>
+
+
+<div class="overlay" id="joinOverlay"><section class="join-card"><div class="join-tag">FICTIONAL FIELD ROLE</div><div class="join-icon">BC<span>04</span></div><h2>BORDER CONTROL</h2><p>Join the four-person roleplay field room. Use checkpoint marks, block-area outlines, observation notes and team chat on a fictional reference map.</p><label for="joinName">YOUR CALLSIGN</label><input autocomplete="nickname" id="joinName" maxlength="18" placeholder="Example: Field-01"/><button id="joinBtn" type="button">ENTER FIELD ROOM</button><div id="joinError" role="alert"></div><a class="back-link" href="/">← CHOOSE DIFFERENT ROLE</a></section></div>
+<div class="overlay" hidden="" id="editorOverlay"><section class="editor-card"><header><h2 id="editorTitle">NEW CHECKPOINT</h2><button aria-label="Close form" id="editorClose" type="button">✕</button></header><p id="editorCoords"></p><label for="markLabel">LABEL</label><input id="markLabel" maxlength="70" placeholder="Checkpoint A"/><label for="markPriority">MAP MARK SIZE / IMPORTANCE</label><select id="markPriority"><option value="small">SMALL REPORT / REVEALS ON ZOOM</option><option value="major">LARGE INCIDENT / ALWAYS VISIBLE</option></select>
+<label for="markNote">NOTES</label><textarea id="markNote" maxlength="240" placeholder="Short fictional roleplay notes" rows="3"></textarea><div class="dialog-actions"><button id="editorCancel" type="button">CANCEL</button><button id="editorSave" type="button">SAVE MARK</button></div><small>Visible to everyone in the Border Control room only.</small></section></div>
+<div class="overlay" hidden="" id="detailOverlay"><section class="editor-card"><header><h2 id="detailTitle">MAP MARK</h2><button aria-label="Close detail" id="detailClose" type="button">✕</button></header><div id="detailInfo"></div><p id="detailText"></p><div class="detail-media" id="detailMedia"></div><div class="dialog-actions"><button class="danger" id="removeMark" type="button">REMOVE MY MARK</button><button id="detailDone" type="button">CLOSE</button></div></section></div>
+<div class="overlay" hidden="" id="captureOverlay">
+<section aria-labelledby="captureTitle" aria-modal="true" class="capture-card" role="dialog">
+<header><h2 id="captureTitle">BROWSER CAMERA</h2><button aria-label="Close camera" id="captureClose" type="button">✕</button></header>
+<div class="capture-status" id="captureStatus">CAMERA OFF</div>
+<div class="camera-filter-bar"><span>CAMERA FILTER</span><button class="active" data-cam-vision="color" type="button">COLOR</button><button data-cam-vision="night" type="button">NIGHT</button><button data-cam-vision="heat" type="button">HEAT</button></div>
+<div class="camera-stage" data-vision="color" id="cameraStage">
+<video autoplay="" id="cameraPreview" muted="" playsinline=""></video>
+<img alt="Newly captured photo preview" hidden="" id="photoPreview"/>
+<video controls="" hidden="" id="clipPreview" playsinline=""></video>
+<div aria-hidden="true" class="camera-corners"></div>
+</div>
+<div class="capture-actions">
+<button id="flipCamera" type="button">FRONT / REAR</button>
+<button id="capturePhotoBtn" type="button">TAKE PHOTO</button>
+<button id="startRecording" type="button">START VIDEO</button>
+<button hidden="" id="stopRecording" type="button">STOP VIDEO</button>
+</div>
+<div class="capture-share">
+<button disabled="" id="sendMediaChat" type="button">SEND TO CHAT</button>
+<button disabled="" id="sendMediaMap" type="button">PLACE ON MAP</button>
+<button disabled="" id="retakeMedia" type="button">RETAKE</button>
+</div>
+<p class="capture-help">Photo/video capture stays inside this website when your browser supports it. You must choose SEND or PLACE; no automatic sharing. Video is limited to 8 seconds.</p>
+</section>
+</div>
+<div class="overlay" hidden="" id="themeOverlay">
+<section aria-labelledby="themeTitle" aria-modal="true" class="theme-dialog" role="dialog">
+<header class="theme-titlebar"><h2 id="themeTitle">BORDER / THEME STUDIO</h2><button id="closeThemes" type="button">CLOSE</button></header>
+<p class="theme-note">Adjust the look of your own screen. Save a custom theme to restore it later. Theme changes don't alter other players' screens.</p>
+<div class="theme-tabs"><button class="active" data-theme-panel="effects" type="button">IMAGE FILTERS</button><button data-theme-panel="editor" type="button">UI EDITOR</button><button data-theme-panel="wallpapers" type="button">30 WALLPAPERS</button></div>
+<div class="theme-panel" id="themeEffects">
+<div class="theme-sliders">
+<label>GRIT <input data-theme-setting="grit" max="100" min="0" type="range" value="10"/><output data-theme-output="grit">10</output></label>
+<label>GRIT SIZE <input data-theme-setting="gritSize" max="12" min="1" type="range" value="4"/><output data-theme-output="gritSize">4</output></label>
+<label>HUE <input data-theme-setting="hue" max="180" min="-180" type="range" value="0"/><output data-theme-output="hue">0</output></label>
+<label>CONTRAST <input data-theme-setting="contrast" max="180" min="50" type="range" value="100"/><output data-theme-output="contrast">100</output></label>
+<label>SATURATION <input data-theme-setting="saturation" max="200" min="0" type="range" value="100"/><output data-theme-output="saturation">100</output></label>
+<label>BRIGHTNESS <input data-theme-setting="brightness" max="160" min="45" type="range" value="100"/><output data-theme-output="brightness">100</output></label>
+</div>
+<button class="theme-neutral" id="resetThemeEffects" type="button">RESET IMAGE FILTERS</button>
+</div>
+<div class="theme-panel" hidden="" id="themeEditor">
+<div class="theme-editor-grid">
+<label>BOX TO RECOLOR <select id="themeBox"><option value="header">HEADER</option><option value="left">LEFT OPERATIONS</option><option value="map">MAP PANEL</option><option value="right">COMMUNICATIONS</option><option value="chat">CHAT BOX</option><option value="tool">TOOL BUTTONS</option><option value="popup">POPUPS</option></select></label>
+<label>BOX COLOR <input id="themeBoxColor" type="color" value="#0b181e"/></label>
+<label>LETTER COLOR <input id="themeTextColor" type="color" value="#e0e9e6"/></label>
+<label>LINE COLOR <input id="themeLineColor" type="color" value="#2b4148"/></label>
+<label>FONT <select id="themeFont"><option value="condensed">COLD / CONDENSED</option><option value="mono">TERMINAL / MONO</option><option value="modern">MODERN / SANS</option><option value="industrial">INDUSTRIAL / SQUARE</option></select></label>
+<label>PATTERN <select id="themePattern"><option value="none">NONE</option><option value="grid">FINE GRID</option><option value="dots">DOT MATRIX</option><option value="scan">SCANLINES</option><option value="diagonal">DIAGONAL</option><option value="cross">CROSSHATCH</option></select></label>
+</div>
+<div class="theme-preview" id="themePreview">LIVE THEME PREVIEW / BORDER CONTROL</div>
+</div>
+<div class="theme-panel" hidden="" id="themeWallpapers">
+<p class="theme-note">30 original geometric wallpapers. Select a thumbnail to apply to the panels/background. No extra uploads needed.</p>
+<div aria-label="30 wallpaper choices" class="wallpaper-gallery" id="wallpaperGallery"></div>
+</div>
+<div class="theme-save-row"><input id="themeSaveName" maxlength="28" placeholder="Theme name (for example: Night Sector)"/><button id="saveTheme" type="button">SAVE THEME</button><button id="restoreTheme" type="button">LOAD SAVED</button></div>
+<div class="saved-theme-list" id="themeSavedList"></div>
+<div aria-live="polite" class="theme-message" id="themeMessage"></div>
+</section>
+</div>
+<div class="overlay" hidden="" id="layoutsOverlay"><section aria-labelledby="layoutsTitle" aria-modal="true" class="layout-dialog" role="dialog"><div class="layout-dialog-head"><div><small>07 / INTERFACE STYLES</small><h2 id="layoutsTitle">SELECT YOUR COMMAND LAYOUT</h2></div><button id="closeLayouts" type="button">CLOSE</button></div><p>Each layout moves its panels and controls, not just the colors. In phone landscape, all layouts keep marking on the left, map in the center, and chat on the right.</p><div class="layout-presets">
+<button data-layout-preset="dark-bravo" type="button"><span class="swatch dark-bravo"></span><strong>DARK BRAVO</strong><small>Three-panel command screen: tools left, large center map, radio/chat right</small></button>
+<button data-layout-preset="cool-night" type="button"><span class="swatch cool-night"></span><strong>COOL NIGHT</strong><small>Map and reports above, operations along bottom, communications on right</small></button>
+<button data-layout-preset="sunny-day" type="button"><span class="swatch sunny-day"></span><strong>SUNNY DAY</strong><small>Wide map-first screen, with controls and chat underneath</small></button>
+<button data-layout-preset="cool-morning" type="button"><span class="swatch cool-morning"></span><strong>COOL MORNING</strong><small>Swap sides: communications left, map center, field tools right</small></button>
+<button data-layout-preset="midnight-orange" type="button"><span class="swatch midnight-orange"></span><strong>MIDNIGHT ORANGE</strong><small>New vertical side-tabs: MARKS, COLORS, UNITS and LAYOUTS</small></button>
+</div></section></div>
+<div class="toast" hidden="" id="toast" role="status"></div><script defer src="/border/mission-control.js"></script><script defer src="/border/creator-dossier.js"></script><script defer src="/border/profile-call.js"></script><script defer src="/border/time-lens.js"></script></body></html>

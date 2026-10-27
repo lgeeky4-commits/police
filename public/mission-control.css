@@ -1,0 +1,13 @@
+/* Search and mission approval controls, compatible with all layout themes. */
+.case-lookup{display:grid;gap:7px;padding:10px 0;border-top:1px solid var(--bc-rule,#3d5960)}
+.case-lookup label{color:var(--bc-text,#e4ecea);font:900 10px Consolas,monospace;letter-spacing:.7px}
+.case-lookup input{width:100%;min-height:40px;min-width:0;background:#0c2028;color:#e6faf4;border:1px solid #66857e;padding:10px;font:11px Consolas,monospace}
+.case-results{display:grid;gap:5px;max-height:174px;overflow:auto}
+.case-results button,.case-archived{padding:9px;text-align:left;overflow-wrap:anywhere;background:#173238;border:1px solid #53756e;color:#e7f9f5;font:10px/1.4 Consolas,monospace}
+.case-archived{background:#152321;color:#9cb8ad;border-style:dashed}
+.case-results p,.case-help{color:#88a5a1;font:10px/1.5 Consolas,monospace;margin:0}
+.mission-actions{display:grid;gap:8px;padding:11px 0;border-top:1px solid #5a7774;margin-top:10px}
+.mission-status{font:11px/1.5 Consolas,monospace;color:#ccded8;margin:0}
+.mission-actions button{padding:12px 8px;color:white;border:1px solid #66857b;background:#26433c;font:900 11px Consolas,monospace}
+.mission-confirm{background:#31594c!important;border-color:#a0e4ba!important}
+.mission-actions [hidden]{display:none!important}
